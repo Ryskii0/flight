@@ -17,6 +17,8 @@ export interface FlightOffer {
   avgPrice: number
   region: string
   visaFree: boolean
+  layoverCity?: string
+  layoverDuration?: number // minutes
 }
 
 export const AIRPORTS: Record<string, { city: string; name: string; region: string }> = {
@@ -37,20 +39,20 @@ export const AIRPORTS: Record<string, { city: string; name: string; region: stri
   XMN: { city: '厦门', name: '高崎', region: '国内' },
 }
 
-const ROUTES: { origin: string; dest: string; basePrice: number; duration: number; stops: number; airline: string; depHour: number }[] = [
+const ROUTES: { origin: string; dest: string; basePrice: number; duration: number; stops: number; airline: string; depHour: number; layoverCity?: string; layoverDuration?: number }[] = [
   { origin: 'SHA', dest: 'BKK', basePrice: 800, duration: 315, stops: 0, airline: '东方航空', depHour: 9 },
   { origin: 'SHA', dest: 'SIN', basePrice: 950, duration: 360, stops: 0, airline: '新加坡航空', depHour: 10 },
-  { origin: 'SHA', dest: 'KUL', basePrice: 700, duration: 420, stops: 1, airline: '亚洲航空', depHour: 14 },
-  { origin: 'SHA', dest: 'DPS', basePrice: 1100, duration: 480, stops: 1, airline: '东方航空', depHour: 8 },
+  { origin: 'SHA', dest: 'KUL', basePrice: 700, duration: 420, stops: 1, airline: '亚洲航空', depHour: 14, layoverCity: '吉隆坡', layoverDuration: 540 },
+  { origin: 'SHA', dest: 'DPS', basePrice: 1100, duration: 480, stops: 1, airline: '东方航空', depHour: 8, layoverCity: '新加坡', layoverDuration: 600 },
   { origin: 'SHA', dest: 'HAN', basePrice: 650, duration: 270, stops: 0, airline: '越南航空', depHour: 11 },
   { origin: 'SHA', dest: 'NRT', basePrice: 1200, duration: 195, stops: 0, airline: '全日空', depHour: 9 },
   { origin: 'SHA', dest: 'ICN', basePrice: 600, duration: 120, stops: 0, airline: '韩亚航空', depHour: 7 },
   { origin: 'SHA', dest: 'OKA', basePrice: 850, duration: 150, stops: 0, airline: '东方航空', depHour: 13 },
   { origin: 'PVG', dest: 'BKK', basePrice: 750, duration: 320, stops: 0, airline: '泰国航空', depHour: 22 },
   { origin: 'PVG', dest: 'SIN', basePrice: 900, duration: 365, stops: 0, airline: '东方航空', depHour: 8 },
-  { origin: 'HGH', dest: 'BKK', basePrice: 680, duration: 380, stops: 1, airline: '亚洲航空', depHour: 6 },
+  { origin: 'HGH', dest: 'BKK', basePrice: 680, duration: 380, stops: 1, airline: '亚洲航空', depHour: 6, layoverCity: '曼谷', layoverDuration: 480 },
   { origin: 'HGH', dest: 'ICN', basePrice: 580, duration: 130, stops: 0, airline: '济州航空', depHour: 10 },
-  { origin: 'NKG', dest: 'BKK', basePrice: 720, duration: 350, stops: 1, airline: '东方航空', depHour: 15 },
+  { origin: 'NKG', dest: 'BKK', basePrice: 720, duration: 350, stops: 1, airline: '东方航空', depHour: 15, layoverCity: '广州', layoverDuration: 300 },
   { origin: 'SHA', dest: 'CAN', basePrice: 380, duration: 150, stops: 0, airline: '南方航空', depHour: 8 },
   { origin: 'SHA', dest: 'CTU', basePrice: 420, duration: 180, stops: 0, airline: '川航', depHour: 9 },
   { origin: 'SHA', dest: 'XMN', basePrice: 350, duration: 120, stops: 0, airline: '厦门航空', depHour: 7 },
@@ -104,6 +106,8 @@ for (const route of ROUTES) {
       avgPrice,
       region: AIRPORTS[route.dest].region,
       visaFree: VISA_FREE.has(route.dest),
+      layoverCity: route.layoverCity,
+      layoverDuration: route.layoverDuration,
     })
   }
 }

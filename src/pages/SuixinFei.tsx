@@ -121,6 +121,21 @@ export default function SuixinFei() {
           })}
         </div>
       )}
+
+      {/* 第三方航线地图工具 */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-semibold text-gray-700">航线可视化地图</div>
+          <a href="https://github.com/Blackxool/HNA666-flight-map" target="_blank" rel="noreferrer"
+            className="text-xs text-gray-400 underline">来源：HNA666-flight-map</a>
+        </div>
+        <iframe
+          src="https://hna666.cfd/666"
+          className="w-full rounded-xl border border-gray-200"
+          style={{ height: '480px' }}
+          title="海航666随心飞航线地图"
+        />
+      </div>
     </div>
   )
 }
